@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family: 'Segoe UI', sans-serif;
+    height:100vh;
+    background: linear-gradient(135deg,#ff4e50,#ff758c,#ff9a9e);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    color:white;
+    text-align:center;
+}
+
+/* หน้าเริ่ม */
+.start-screen{
+    position:absolute;
+}
+
+.start-btn{
+    padding:15px 35px;
+    font-size:20px;
+    border:none;
+    border-radius:40px;
+    background:white;
+    color:#ff4e50;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.start-btn:hover{
+    background:#ff4e50;
+    color:white;
+}
+
+/* กล่องหลัก */
+.container{
+    display:none;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(20px);
+    padding:30px;
+    border-radius:30px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.3);
+    width:90%;
+    max-width:420px;
+}
+
+h1{font-size:26px;}
+p{margin-top:15px;font-size:18px;}
+
+.buttons{
+    margin-top:25px;
+    position:relative;
+    height:100px;
+}
+
+button{
+    padding:10px 25px;
+    font-size:16px;
+    border:none;
+    border-radius:30px;
+    cursor:pointer;
+    margin:10px;
+    transition:0.3s;
+}
+
+.yes{
+    background:white;
+    color:#ff4e50;
+}
+
+.yes:hover{
+    background:#ff4e50;
+    color:white;
+}
+
+.no{
+    background:#222;
+    color:white;
+    position:absolute;
+}
+
+/* หัวใจลอย */
+.heart{
+    position:absolute;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh) scale(1);}
+    100%{transform:translateY(-10vh) scale(1.5);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="start-screen" id="startScreen">
+    <h1>💌 สำหรับคนพิเศษ N 💌</h1>
+    <br><br>
+    <button class="start-btn" onclick="startLove()">กดเพื่อเริ่มความรัก 💖</button>
+</div>
+
+<div class="container" id="mainContent">
+    <h1>Happy Valentine 💘</h1>
+    <p>
+        ตั้งแต่มีพี่ ชีวิตผมก็เต็มไปด้วยความสุข ❤️<br>
+        พี่จะอยู่กับผมตลอดไปไหม?
+    </p>
+
+    <div class="buttons">
+        <button class="yes" onclick="sayYes()">YES 💖</button>
+        <button class="no" id="noBtn"
+        onmouseover="moveButton()">NO 😜</button>
+    </div>
+</div>
+
+<script>
+
+// เริ่มเว็บ
+function startLove(){
+    document.getElementById("startScreen").style.display="none";
+    document.getElementById("mainContent").style.display="block";
+    floatingHearts();
+}
+
+// กด YES
+function sayYes(){
+    heartExplosion();
+    alert("รักพี่มากที่สุดเลยนะ 💖❤️");
+}
+
+// ปุ่ม NO วิ่งหนี
+function moveButton(){
+    const btn=document.getElementById("noBtn");
+    const x=Math.random()*(window.innerWidth-100);
+    const y=Math.random()*(window.innerHeight-100);
+    btn.style.left=x+"px";
+    btn.style.top=y+"px";
+}
+
+// หัวใจลอย
+function floatingHearts(){
+    setInterval(()=>{
+        const heart=document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML="❤️";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.fontSize=Math.random()*20+20+"px";
+        document.body.appendChild(heart);
+        setTimeout(()=>heart.remove(),6000);
+    },300);
+}
+
+// ระเบิดหัวใจ
+function heartExplosion(){
+    for(let i=0;i<30;i++){
+        const heart=document.createElement("div");
+        heart.innerHTML="💖";
+        heart.style.position="absolute";
+        heart.style.left="50%";
+        heart.style.top="50%";
+        heart.style.fontSize="20px";
+        document.body.appendChild(heart);
+
+        const x=(Math.random()-0.5)*800;
+        const y=(Math.random()-0.5)*800;
+
+        heart.animate([
+            {transform:"translate(0,0)",opacity:1},
+            {transform:`translate(${x}px,${y}px)`,opacity:0}
+        ],{duration:1200});
+
+        setTimeout(()=>heart.remove(),1200);
+    }
+}
+
+</script>
+
+</body>
+</html>
